@@ -31,7 +31,7 @@ void opcontrol()
 		right_back = right_stick;
 
 		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-			roller = 40;
+			roller = 100;
 		} else {
 			roller = 0;
 		}
