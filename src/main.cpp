@@ -3,7 +3,6 @@
 
 #define MOTOR_LEFT 4
 
-
 void opcontrol()
 {
 	pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
@@ -16,10 +15,10 @@ void opcontrol()
 	pros::Motor roller(5);
 
 	left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-		left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-		right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-		right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-		roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 
 	while(true) {
@@ -39,6 +38,4 @@ void opcontrol()
 
 		pros::delay(50);
 	}	
-	
-	
 }
