@@ -3,14 +3,10 @@
 
 #define MOTOR_LEFT 4
 
-//#define DIGITAL_SENSOR_PORT_A 'A'
-//#define DIGITAL_SENSOR_PORT_B 'B'
 
 void opcontrol()
 {
 	pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
-	//pros::ADIDigitalOut piston_a(DIGITAL_SENSOR_PORT_A);
-	//pros::ADIDigitalOut piston_b(DIGITAL_SENSOR_PORT_B);
 
 	pros::Motor left_front(2);
 	pros::Motor left_back(1);
