@@ -1,6 +1,8 @@
 #include "main.h"
 #include "motors.hpp"
 
+const float MOVE_TO_VOLT = 12000 / 128;
+
 #define MOTOR_LEFT 4
 #define SHOOT_PORT 'A'
 
@@ -67,10 +69,12 @@ void opcontrol()
 		int left_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 		int right_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
-		left_front = left_stick;
-		left_back = left_stick;
-		right_front = right_stick;
-		right_back = right_stick;
+		// Converted old drive to voltage direct drive
+		left_front.move_voltage(MOVE_TO_VOLT * left_stick);
+		left_back.move_voltage(MOVE_TO_VOLT * left_stick);
+		right_front.move_voltage(MOVE_TO_VOLT * right_stick);
+		right_back.move_voltage(MOVE_TO_VOLT * right_stick);
+	
 
 		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
 			roller = 75;
