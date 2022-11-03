@@ -46,14 +46,16 @@ void autonomous() {
 	right_front = 0;
 
 	//A Auton
-	//roller = 55;
-	//pros::delay(225);
-	//roller = 0;
+	roller = 55;
+	pros::delay(225);
+	roller = 0;
 
 	//B Auton
+	/*
 	roller = 70;
-	pros::delay(300);
-	roller = 0; 
+	//pros::delay(300);
+	//roller = 0;
+	*/ 
 }
 
 void opcontrol()
