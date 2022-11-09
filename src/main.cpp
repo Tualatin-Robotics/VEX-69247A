@@ -31,6 +31,20 @@ void set_tank(int l, int r) {
 	right_front = r;
 }
 
+void initialize() {
+	// Create button
+	lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);
+	lv_obj_set_pos(btn, 10, 10);
+	lv_obj_set_size(btn, 200, 200);
+	//lv_btn_set_action(btn, LV_BTN_ACTION_CLICK, button_click);
+	
+
+	// Create label for button
+	lv_obj_t * label = lv_label_create(btn, NULL);
+	lv_label_set_text(label, "Blue team auton");
+	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);	
+}
+
 void autonomous() {
 	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
