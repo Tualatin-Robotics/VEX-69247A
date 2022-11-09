@@ -61,17 +61,6 @@ void autonomous() {
 
 void opcontrol()
 {
-	pros::screen_touch_status_s_t touch;
-
-	while (true) {
-		touch = pros::screen_touch_status_s();
-
-		pros::screen::print(pros::E_TEXT_MEDIUM, 1, "%d", touch.x);
-		pros::screen::print(pros::E_TEXT_MEDIUM, 1, "%d", touch.y);
-		pros::delay(20);
-		break;
-	}
-
 	left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
