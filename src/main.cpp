@@ -28,8 +28,19 @@ int shoot_count = 0;
 int shoot_count_limit = 30;
 pros::ADIDigitalOut shooter(SHOOT_PORT);
 
-lv_obj_t * btn;
+lv_obj_t * Red_btn;
+lv_obj_t * Blue_btn;
 lv_obj_t * label;
+
+lv_obj_t * A_Team_btn;
+lv_obj_t * B_Team_btn;
+
+enum Team {
+	A,
+	B
+};
+
+Team selected_team;
 
 void set_tank(int l, int r) {
 	left_back = l;
@@ -38,23 +49,75 @@ void set_tank(int l, int r) {
 	right_front = r;
 }
 
-lv_res_t Blue_Red(lv_obj_t * btn) {
-	//create buttons for red and blue
+lv_res_t Blue(lv_obj_t * btn) {
+	if (selected_team == A){
+		//A Team blue auton goes here
+	}
+	else if (selected_team == B) {
+		//B Team blue auton goes here
+	}
 
 	return LV_RES_OK;
 }
 
+lv_res_t Red(lv_obj_t * btn) {
+	if (selected_team == A){
+		//A Team blue auton goes here
+	}
+	else if (selected_team == B) {
+		//B Team blue auton goes here
+	}
+
+	return LV_RES_OK;
+}
+
+lv_res_t A_Team(lv_obj_t * btn) {
+	selected_team = A;
+	Red_btn = lv_btn_create(lv_scr_act(), NULL);
+	lv_obj_set_pos(Red_btn, 10, 10);
+	lv_obj_set_size(Red_btn, 200, 200);
+	lv_btn_set_action(Red_btn, LV_BTN_ACTION_CLICK, Red);
+
+	Blue_btn = lv_btn_create(lv_scr_act(), NULL);
+	lv_obj_set_pos(Blue_btn, 210, 10);
+	lv_obj_set_size(Blue_btn, 200, 200);
+	lv_btn_set_action(Blue_btn, LV_BTN_ACTION_CLICK, Blue);
+
+	return LV_RES_OK;
+}
+
+lv_res_t B_Team(lv_obj_t * btn) {
+	selected_team = A;
+	Red_btn = lv_btn_create(lv_scr_act(), NULL);
+	lv_obj_set_pos(Red_btn, 10, 10);
+	lv_obj_set_size(Red_btn, 200, 200);
+	lv_btn_set_action(Red_btn, LV_BTN_ACTION_CLICK, Red);
+
+	Blue_btn = lv_btn_create(lv_scr_act(), NULL);
+	lv_obj_set_pos(Blue_btn, 210, 10);
+	lv_obj_set_size(Blue_btn, 200, 200);
+	lv_btn_set_action(Blue_btn, LV_BTN_ACTION_CLICK, Blue);
+
+	return LV_RES_OK;
+}
+
+
+
 void initialize() {
 	// Create button
-	btn = lv_btn_create(lv_scr_act(), NULL);
-	lv_obj_set_pos(btn, 10, 10);
-	lv_obj_set_size(btn, 200, 200);
-	lv_btn_set_action(btn, LV_BTN_ACTION_CLICK, Blue_Red);
+	A_Team_btn = lv_btn_create(lv_scr_act(), NULL);
+	lv_obj_set_pos(A_Team_btn, 10, 10);
+	lv_obj_set_size(A_Team_btn, 200, 200);
+	lv_btn_set_action(A_Team_btn, LV_BTN_ACTION_CLICK, A_Team);
 	
+	B_Team_btn = lv_btn_create(lv_scr_act(), NULL);
+	lv_obj_set_pos(B_Team_btn, 10, 10);
+	lv_obj_set_size(B_Team_btn, 200, 200);
+	lv_btn_set_action(B_Team_btn, LV_BTN_ACTION_CLICK, B_Team);
 
 	// Create label for button
-	label = lv_label_create(btn, NULL);
-	lv_label_set_text(label, "Blue team auton");
+	label = lv_label_create(A_Team_btn, NULL);
+	lv_label_set_text(label, "A team auton");
 	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);	
 }
 
