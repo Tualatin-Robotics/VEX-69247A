@@ -21,6 +21,9 @@ pros::Motor roller(5);
 pros::Motor shooter_r(6);
 pros::Motor shooter_c(7, true);
 
+pros::Motor succ(8);
+
+// Pneumatics Setup
 int shoot_count = 0;
 int shoot_count_limit = 30;
 pros::ADIDigitalOut shooter(SHOOT_PORT);
@@ -109,6 +112,15 @@ void opcontrol()
 			roller = -75;
 		} else {
 			roller = 0;
+		}
+
+		// SUCC Control
+		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+			succ.move_voltage(12000);
+		} else if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+			succ.move_voltage(-12000);
+		} else {
+			succ.move_voltage(0);
 		}
 
 		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_B) && shoot_count == 0) {
