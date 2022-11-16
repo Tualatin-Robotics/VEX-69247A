@@ -2,6 +2,7 @@
 #include "motors.hpp"
 #include "pros/screen.h"
 
+
 const float MOVE_TO_VOLT = 12000 / 128;
 
 #define MOTOR_LEFT 4
@@ -24,6 +25,9 @@ int shoot_count = 0;
 int shoot_count_limit = 30;
 pros::ADIDigitalOut shooter(SHOOT_PORT);
 
+lv_obj_t * btn;
+lv_obj_t * label;
+
 void set_tank(int l, int r) {
 	left_back = l;
 	right_back = r;
@@ -31,16 +35,22 @@ void set_tank(int l, int r) {
 	right_front = r;
 }
 
+lv_res_t Blue_Red(lv_obj_t * btn) {
+	//create buttons for red and blue
+
+	return LV_RES_OK;
+}
+
 void initialize() {
 	// Create button
-	lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);
+	btn = lv_btn_create(lv_scr_act(), NULL);
 	lv_obj_set_pos(btn, 10, 10);
 	lv_obj_set_size(btn, 200, 200);
-	//lv_btn_set_action(btn, LV_BTN_ACTION_CLICK, button_click);
+	lv_btn_set_action(btn, LV_BTN_ACTION_CLICK, Blue_Red);
 	
 
 	// Create label for button
-	lv_obj_t * label = lv_label_create(btn, NULL);
+	label = lv_label_create(btn, NULL);
 	lv_label_set_text(label, "Blue team auton");
 	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);	
 }
