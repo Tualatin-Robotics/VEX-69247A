@@ -35,6 +35,11 @@ lv_obj_t * label;
 lv_obj_t * A_Team_btn;
 lv_obj_t * B_Team_btn;
 
+lv_obj_t * A_Label;
+lv_obj_t * B_Label;
+lv_obj_t * Red_Label;
+lv_obj_t * Blue_Label;
+
 enum Team {
 	A,
 	B
@@ -57,6 +62,9 @@ lv_res_t Blue(lv_obj_t * btn) {
 		//B Team blue auton goes here
 	}
 
+	lv_obj_del(Red_btn);
+	lv_obj_del(Blue_btn);
+
 	return LV_RES_OK;
 }
 
@@ -67,6 +75,9 @@ lv_res_t Red(lv_obj_t * btn) {
 	else if (selected_team == B) {
 		//B Team blue auton goes here
 	}
+
+	lv_obj_del(Red_btn);
+	lv_obj_del(Blue_btn);
 
 	return LV_RES_OK;
 }
@@ -83,11 +94,14 @@ lv_res_t A_Team(lv_obj_t * btn) {
 	lv_obj_set_size(Blue_btn, 200, 200);
 	lv_btn_set_action(Blue_btn, LV_BTN_ACTION_CLICK, Blue);
 
+	lv_obj_del(A_Team_btn);
+	lv_obj_del(B_Team_btn);
+
 	return LV_RES_OK;
 }
 
 lv_res_t B_Team(lv_obj_t * btn) {
-	selected_team = A;
+	selected_team = B;
 	Red_btn = lv_btn_create(lv_scr_act(), NULL);
 	lv_obj_set_pos(Red_btn, 10, 10);
 	lv_obj_set_size(Red_btn, 200, 200);
@@ -97,6 +111,17 @@ lv_res_t B_Team(lv_obj_t * btn) {
 	lv_obj_set_pos(Blue_btn, 210, 10);
 	lv_obj_set_size(Blue_btn, 200, 200);
 	lv_btn_set_action(Blue_btn, LV_BTN_ACTION_CLICK, Blue);
+
+	Red_Label = lv_label_create(Red_btn, NULL);
+	lv_label_set_text(label, "Red auton");
+	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);	
+
+	Blue_Label = lv_label_create(Blue_btn, NULL);
+	lv_label_set_text(label, "Blue auton");
+	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);
+
+	lv_obj_del(A_Team_btn);
+	lv_obj_del(B_Team_btn);
 
 	return LV_RES_OK;
 }
@@ -116,9 +141,13 @@ void initialize() {
 	lv_btn_set_action(B_Team_btn, LV_BTN_ACTION_CLICK, B_Team);
 
 	// Create label for button
-	label = lv_label_create(A_Team_btn, NULL);
+	A_Label = lv_label_create(A_Team_btn, NULL);
 	lv_label_set_text(label, "A team auton");
 	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);	
+
+	B_Label = lv_label_create(B_Team_btn, NULL);
+	lv_label_set_text(label, "B team auton");
+	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);
 }
 
 void autonomous() {
