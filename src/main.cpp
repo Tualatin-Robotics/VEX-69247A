@@ -1,7 +1,7 @@
 #include "main.h"
 #include "motors.hpp"
 #include "pros/screen.h"
-
+#include "smile_vex.c"
 
 const float MOVE_TO_VOLT = 12000 / 128;
 
@@ -40,6 +40,8 @@ lv_obj_t * B_Label;
 lv_obj_t * Red_Label;
 lv_obj_t * Blue_Label;
 
+lv_obj_t * img;
+
 enum Team {
 	A,
 	B
@@ -55,6 +57,9 @@ void set_tank(int l, int r) {
 }
 
 lv_res_t Blue(lv_obj_t * btn) {
+	img = lv_img_create(lv_scr_act(), NULL);
+	lv_img_set_src(img, &smile_vex);
+
 	if (selected_team == A){
 		//A Team blue auton goes here
 	}
@@ -69,6 +74,9 @@ lv_res_t Blue(lv_obj_t * btn) {
 }
 
 lv_res_t Red(lv_obj_t * btn) {
+	img = lv_img_create(lv_scr_act(), NULL);
+	lv_img_set_src(img, &smile_vex);
+
 	if (selected_team == A){
 		//A Team blue auton goes here
 	}
