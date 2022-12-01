@@ -5,23 +5,20 @@
 
 const float MOVE_TO_VOLT = 12000 / 128;
 
-#define MOTOR_LEFT 4
-#define SHOOT_PORT 'A'
-
 // MOTOR DEFINITIONS
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
-pros::Motor left_front(2);
-pros::Motor left_back(1);
-pros::Motor right_front(3, true);
-pros::Motor right_back(4, true);
+pros::Motor left_front(LEFT_FRONT_MOTOR);
+pros::Motor left_back(LEFT_BACK_MOTOR);
+pros::Motor right_front(RIGHT_FRONT_MOTOR, true);
+pros::Motor right_back(RIGHT_BACK_MOTOR, true);
 
-pros::Motor roller(5);
+pros::Motor roller(ROLLER_MOTOR);
 
-pros::Motor shooter_r(6);
-pros::Motor shooter_c(7, true);
+pros::Motor shooter_r(SHOOTER_R_MOTOR);
+pros::Motor shooter_c(SHOOTER_C_MOTOR, true);
 
-pros::Motor succ(8);
+pros::Motor succ(SUCC_MOTOR);
 
 // Pneumatics Setup
 int shoot_count = 0;
