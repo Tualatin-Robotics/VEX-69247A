@@ -134,6 +134,7 @@ lv_res_t B_Team(lv_obj_t * btn) {
 
 
 void initialize() {
+	/*
 	// Create button
 	A_Team_btn = lv_btn_create(lv_scr_act(), NULL);
 	lv_obj_set_pos(A_Team_btn, 10, 10);
@@ -153,6 +154,7 @@ void initialize() {
 	B_Label = lv_label_create(B_Team_btn, NULL);
 	lv_label_set_text(label, "B team auton");
 	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);
+	*/
 }
 
 void autonomous() {
