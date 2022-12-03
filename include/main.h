@@ -36,6 +36,7 @@
 
 #include "api.h"
 #include "pros/apix.h"
+#include "motors.h"
 
 /**
  * You should add more #includes here

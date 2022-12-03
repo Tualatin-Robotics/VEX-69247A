@@ -1,27 +1,23 @@
 #include "main.h"
-#include "motors.hpp"
 #include "pros/screen.h"
 #include "smile_vex.c"
 
 const float MOVE_TO_VOLT = 12000 / 128;
 
-#define MOTOR_LEFT 4
-#define SHOOT_PORT 'A'
-
 // MOTOR DEFINITIONS
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
-pros::Motor left_front(2);
-pros::Motor left_back(1);
-pros::Motor right_front(3, true);
-pros::Motor right_back(4, true);
+pros::Motor left_front(LEFT_FRONT_MOTOR);
+pros::Motor left_back(LEFT_BACK_MOTOR);
+pros::Motor right_front(RIGHT_FRONT_MOTOR, true);
+pros::Motor right_back(RIGHT_BACK_MOTOR, true);
 
-pros::Motor roller(5);
+pros::Motor roller(ROLLER_MOTOR);
 
-pros::Motor shooter_r(6);
-pros::Motor shooter_c(7, true);
+pros::Motor shooter_r(SHOOTER_R_MOTOR);
+pros::Motor shooter_c(SHOOTER_C_MOTOR, true);
 
-pros::Motor succ(8);
+pros::Motor succ(SUCC_MOTOR);
 
 // Pneumatics Setup
 int shoot_count = 0;
@@ -137,6 +133,7 @@ lv_res_t B_Team(lv_obj_t * btn) {
 
 
 void initialize() {
+	/*
 	// Create button
 	A_Team_btn = lv_btn_create(lv_scr_act(), NULL);
 	lv_obj_set_pos(A_Team_btn, 10, 10);
@@ -156,6 +153,7 @@ void initialize() {
 	B_Label = lv_label_create(B_Team_btn, NULL);
 	lv_label_set_text(label, "B team auton");
 	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);
+	*/
 }
 
 void autonomous() {
