@@ -31,10 +31,10 @@ lv_obj_t * label;
 lv_obj_t * A_Team_btn;
 lv_obj_t * B_Team_btn;
 
-lv_obj_t * A_Label;
-lv_obj_t * B_Label;
-lv_obj_t * Red_Label;
-lv_obj_t * Blue_Label;
+lv_obj_t * A_label;
+lv_obj_t * B_label;
+lv_obj_t * Red_label;
+lv_obj_t * Blue_label;
 
 lv_obj_t * img;
 
@@ -55,6 +55,7 @@ void set_tank(int l, int r) {
 lv_res_t Blue(lv_obj_t * btn) {
 	img = lv_img_create(lv_scr_act(), NULL);
 	lv_img_set_src(img, &smile_vex);
+
 
 	if (selected_team == A){
 		//A Team blue auton goes here
@@ -116,13 +117,13 @@ lv_res_t B_Team(lv_obj_t * btn) {
 	lv_obj_set_size(Blue_btn, 200, 200);
 	lv_btn_set_action(Blue_btn, LV_BTN_ACTION_CLICK, Blue);
 
-	Red_Label = lv_label_create(Red_btn, NULL);
-	lv_label_set_text(label, "Red auton");
-	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);	
+	Red_label = lv_label_create(Red_btn, NULL);
+	lv_label_set_text(Red_label, "Red auton");
+	lv_label_set_align(Red_label, LV_LABEL_ALIGN_CENTER);	
 
-	Blue_Label = lv_label_create(Blue_btn, NULL);
-	lv_label_set_text(label, "Blue auton");
-	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);
+	Blue_label = lv_label_create(Blue_btn, NULL);
+	lv_label_set_text(Blue_label, "Blue auton");
+	lv_label_set_align(Blue_label, LV_LABEL_ALIGN_CENTER);
 
 	lv_obj_del(A_Team_btn);
 	lv_obj_del(B_Team_btn);
@@ -133,7 +134,6 @@ lv_res_t B_Team(lv_obj_t * btn) {
 
 
 void initialize() {
-	/*
 	// Create button
 	A_Team_btn = lv_btn_create(lv_scr_act(), NULL);
 	lv_obj_set_pos(A_Team_btn, 10, 10);
@@ -141,19 +141,18 @@ void initialize() {
 	lv_btn_set_action(A_Team_btn, LV_BTN_ACTION_CLICK, A_Team);
 	
 	B_Team_btn = lv_btn_create(lv_scr_act(), NULL);
-	lv_obj_set_pos(B_Team_btn, 10, 10);
+	lv_obj_set_pos(B_Team_btn, 210, 10);
 	lv_obj_set_size(B_Team_btn, 200, 200);
 	lv_btn_set_action(B_Team_btn, LV_BTN_ACTION_CLICK, B_Team);
-
+	
 	// Create label for button
-	A_Label = lv_label_create(A_Team_btn, NULL);
-	lv_label_set_text(label, "A team auton");
-	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);	
+	A_label = lv_label_create(A_Team_btn, NULL);
+	lv_label_set_text(A_label, "A team auton");
+	lv_label_set_align(A_label, LV_LABEL_ALIGN_CENTER);	
 
-	B_Label = lv_label_create(B_Team_btn, NULL);
-	lv_label_set_text(label, "B team auton");
-	lv_label_set_align(label, LV_LABEL_ALIGN_CENTER);
-	*/
+	B_label = lv_label_create(B_Team_btn, NULL);
+	lv_label_set_text(B_label, "B team auton");
+	lv_label_set_align(B_label, LV_LABEL_ALIGN_CENTER);
 }
 
 void autonomous() {
