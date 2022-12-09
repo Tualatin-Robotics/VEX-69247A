@@ -14,7 +14,7 @@ pros::Motor right_back(RIGHT_BACK_MOTOR, true);
 
 pros::Motor roller(ROLLER_MOTOR);
 
-pros::Motor shooter_r(SHOOTER_R_MOTOR);
+pros::Motor shooter_r(SHOOTER_R_MOTOR, true);
 pros::Motor shooter_c(SHOOTER_C_MOTOR, true);
 
 pros::Motor succ(SUCC_MOTOR);
@@ -81,6 +81,10 @@ void opcontrol()
 	right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
+	//varibles for shooter switch
+	bool shooterSwitch;
+	bool aPrevious;
+	bool aCurrent;
 
 	while(true) {
 		int left_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
@@ -126,11 +130,22 @@ void opcontrol()
 			shoot_count = 0;
 			std::cout << "RESET" << std::endl;
 		}
+		
+		aCurrent = drive_con.get_digital(E_CONTROLLER_DIGITAL_A);
+		//shooter toggle
+		if (aCurrent && aCurrent != aPrevious) {
+			shooterSwitch = !shooterSwitch;
+		}
 
+		aPrevious = aCurrent;
 
-
-		shooter_r = 255;
-		shooter_c = 255;
+		if (shooterSwitch) {
+			shooter_c = 255;
+			shooter_r = 255;
+		} else {
+			shooter_c = 0;
+			shooter_r = 0;
+		}
 
 		pros::delay(20);
 	}	
