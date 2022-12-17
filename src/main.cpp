@@ -1,7 +1,11 @@
 #include "main.h"
+#include "pros/misc.h"
+#include "pros/rtos.hpp"
 #include "pros/screen.h"
 
 #include "replay.hpp"
+
+typedef long int ull;
 
 const float MOVE_TO_VOLT = 12000 / 128;
 
@@ -20,6 +24,8 @@ pros::Motor shooter_c(SHOOTER_C_MOTOR, true);
 
 pros::Motor succ(SUCC_MOTOR);
 
+bool end_game_availible;
+
 // Pneumatics Setup
 int shoot_count = 0;
 int shoot_count_limit = 30;
@@ -33,7 +39,11 @@ void set_tank(int l, int r) {
 }
 
 void initialize() {
-	
+	pros::Task task{[=] {
+		pros::delay(100*1000);
+		end_game_availible = true;
+		std::cout << "End Game avalible" << std::endl;
+	}};
 }
 
 void autonomous() {
@@ -58,6 +68,7 @@ void autonomous() {
 
 void opcontrol()
 {
+
 	left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -107,8 +118,17 @@ void opcontrol()
 			std::cout << "RESET" << std::endl;
 		}
 
+		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && end_game_availible) {
+			std::cout << "End game used" << std::endl;
+			end_game_availible = false;
+		}
+
 		shooter_r = 255;
 		shooter_c = 255;
+
+		// Replay code
+		VirtualController vc;
+		
 
 		pros::delay(20);
 	}	
