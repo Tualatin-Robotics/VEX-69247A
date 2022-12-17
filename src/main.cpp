@@ -7,10 +7,10 @@ const float MOVE_TO_VOLT = 12000 / 128;
 // MOTOR DEFINITIONS
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
-pros::Motor left_front(LEFT_FRONT_MOTOR);
-pros::Motor left_back(LEFT_BACK_MOTOR);
-pros::Motor right_front(RIGHT_FRONT_MOTOR, true);
-pros::Motor right_back(RIGHT_BACK_MOTOR, true);
+pros::Motor left_front(LEFT_FRONT_MOTOR, true);
+pros::Motor left_back(LEFT_BACK_MOTOR, true);
+pros::Motor right_front(RIGHT_FRONT_MOTOR);
+pros::Motor right_back(RIGHT_BACK_MOTOR);
 
 pros::Motor roller(ROLLER_MOTOR);
 
