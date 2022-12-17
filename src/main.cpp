@@ -131,7 +131,7 @@ void opcontrol()
 			std::cout << "RESET" << std::endl;
 		}
 		
-		aCurrent = drive_con.get_digital(E_CONTROLLER_DIGITAL_A);
+		aCurrent = drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_A);
 		//shooter toggle
 		if (aCurrent && aCurrent != aPrevious) {
 			shooterSwitch = !shooterSwitch;
