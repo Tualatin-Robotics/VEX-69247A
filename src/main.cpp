@@ -3,7 +3,7 @@
 #include "pros/rtos.hpp"
 #include "pros/screen.h"
 
-#include "replay.hpp"
+#include "libreplay/main.hpp"
 
 typedef long int ull;
 
