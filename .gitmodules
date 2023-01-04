@@ -1,0 +1,3 @@
+[submodule "include/libreplay"]
+	path = include/libreplay
+	url = https://github.com/Tualatin-Robotics/libreplay

@@ -1,6 +1,11 @@
 #include "main.h"
+#include "pros/misc.h"
+#include "pros/rtos.hpp"
 #include "pros/screen.h"
-#include "smile_vex.c"
+
+#include "libreplay/main.hpp"
+
+typedef long int ull;
 
 const float MOVE_TO_VOLT = 12000 / 128;
 
@@ -19,30 +24,26 @@ pros::Motor shooter_c(SHOOTER_C_MOTOR, true);
 
 pros::Motor succ(SUCC_MOTOR);
 
+bool end_game_availible;
+
 // Pneumatics Setup
 int shoot_count = 0;
 int shoot_count_limit = 30;
 pros::ADIDigitalOut shooter(SHOOT_PORT);
-
-lv_obj_t * Red_btn;
-lv_obj_t * Blue_btn;
-lv_obj_t * label;
-
-lv_obj_t * A_Team_btn;
-lv_obj_t * B_Team_btn;
-
-lv_obj_t * A_label;
-lv_obj_t * B_label;
-lv_obj_t * Red_label;
-lv_obj_t * Blue_label;
-
-lv_obj_t * img;
 
 void set_tank(int l, int r) {
 	left_back = l;
 	right_back = r;
 	left_front = l;
 	right_front = r;
+}
+
+void initialize() {
+	pros::Task task{[=] {
+		pros::delay(100*1000);
+		end_game_availible = true;
+		std::cout << "End Game avalible" << std::endl;
+	}};
 }
 
 void autonomous() {
@@ -60,31 +61,26 @@ void autonomous() {
 	left_front = 0;
 	right_front = 0;
 
-	//A Auton
 	roller = 55;
 	pros::delay(225);
 	roller = 0;
-
-	//B Auton
-	/*
-	roller = 70;
-	//pros::delay(300);
-	//roller = 0;
-	*/ 
 }
 
 void opcontrol()
 {
+
 	left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
+
 	//varibles for shooter switch
 	bool shooterSwitch;
 	bool aPrevious;
 	bool aCurrent;
+
 
 	while(true) {
 		int left_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
@@ -117,8 +113,6 @@ void opcontrol()
 		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_B) && shoot_count == 0) {
 			shooter.set_value(true);
 			pros::delay(70);
-			//shooter.set_value(false);
-
 			shoot_count = 1;
 		}
 
@@ -137,6 +131,7 @@ void opcontrol()
 			shooterSwitch = !shooterSwitch;
 		}
 
+
 		aPrevious = aCurrent;
 
 		if (shooterSwitch) {
@@ -146,6 +141,17 @@ void opcontrol()
 			shooter_c = 0;
 			shooter_r = 0;
 		}
+
+		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && end_game_availible) {
+			std::cout << "End game used" << std::endl;
+			end_game_availible = false;
+		}
+
+
+
+		// Replay code
+		VirtualController vc;
+		
 
 		pros::delay(20);
 	}	
