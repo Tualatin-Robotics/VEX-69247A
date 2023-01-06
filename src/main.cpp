@@ -3,7 +3,7 @@
 #include "pros/rtos.hpp"
 #include "pros/screen.h"
 
-#include "libreplay/main.hpp"
+#include "replay.hpp"
 
 typedef long int ull;
 
@@ -28,7 +28,7 @@ bool end_game_availible;
 
 // Pneumatics Setup
 int shoot_count = 0;
-int shoot_count_limit = 30;
+int shoot_count_limit = 20;
 pros::ADIDigitalOut shooter(SHOOT_PORT);
 
 void set_tank(int l, int r) {
@@ -150,7 +150,7 @@ void opcontrol()
 
 
 		// Replay code
-		VirtualController vc;
+		//VirtualController vc;
 		
 
 		pros::delay(20);

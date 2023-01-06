@@ -12,7 +12,7 @@
 #define SHOOTER_R_MOTOR 15
 #define SHOOTER_C_MOTOR 14
 
-#define SHOOT_PORT 'H'
+#define SHOOT_PORT 'A'
 #define ODOMETRY_PORT_0 'C'
 #define ODOMETRY_PORT_1 'D'
 
