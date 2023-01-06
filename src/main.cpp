@@ -81,6 +81,8 @@ void opcontrol()
 	bool aPrevious;
 	bool aCurrent;
 
+	VirtualController vc(&drive_con);
+
 
 	while(true) {
 		int left_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
@@ -150,7 +152,14 @@ void opcontrol()
 
 
 		// Replay code
-		//VirtualController vc;
+		vc.record_frame();
+		std::string encoded_str = vc.encode();
+		std::cout << encoded_str;
+
+		vc.a = 0;
+
+		vc.decode(encoded_str);
+		std::cout << vc.a << std::endl;
 		
 
 		pros::delay(20);
