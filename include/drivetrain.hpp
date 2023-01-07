@@ -25,6 +25,11 @@ void drive_auton(VirtualController* vc) {
 void drive_op(pros::Controller* drive_con) {
     int left_stick = drive_con->get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 	int right_stick = drive_con->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
+
+    left_front.move_voltage(MOVE_TO_VOLT * left_stick);
+    left_back.move_voltage(MOVE_TO_VOLT * left_stick);
+    right_front.move_voltage(MOVE_TO_VOLT * right_stick);
+    right_back.move_voltage(MOVE_TO_VOLT * right_stick);
 }
 
 #endif

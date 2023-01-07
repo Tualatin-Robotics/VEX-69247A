@@ -66,7 +66,7 @@ void autonomous() {
 			succ.move_voltage(0);
 		}
 
-		shoot_auton(drive_con);
+		shoot_auton(&vc);
 
 		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && end_game_availible) {
 			std::cout << "End game used" << std::endl;
@@ -94,7 +94,6 @@ void opcontrol()
 		auto t1 = clock.now(); // Start record
 		drive_op(&drive_con);
 	
-
 		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
 			roller = 75;
 		} else if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
@@ -112,7 +111,7 @@ void opcontrol()
 			succ.move_voltage(0);
 		}
 
-		shoot_op(drive_con);
+		shoot_op(&drive_con);
 
 
 		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && end_game_availible) {

@@ -94,7 +94,7 @@ class VirtualController {
         std::ifstream file("usd/rec_01.txt");
 
         if(!file) {
-             std::cout << "No SD card insterted" << std::endl;
+            //std::cout << "No SD card insterted" << std::endl;
         } else {
             usd_file = fopen("/usd/rec_01.txt", "a");
             std::cout << encode();
