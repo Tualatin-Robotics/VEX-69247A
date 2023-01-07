@@ -4,7 +4,9 @@
 #include "main.h"
 #include <sstream>
 #include <string>
-#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
 
 const int file_size = 40 * 1024;
 
@@ -89,15 +91,22 @@ class VirtualController {
     }
 
     void write_to_file() {
-        usd_file = fopen("/usd/rec_01.txt", "a");
-        std::cout << encode();
-        bool status = fputs(this->encode().c_str(), usd_file);
-        if (status) {
-            // Good status
+        std::ifstream file("usd/rec_01.txt");
+
+        if(!file) {
+             std::cout << "No SD card insterted" << std::endl;
         } else {
-            // Bad status
-        }
-        fclose(usd_file);
+            usd_file = fopen("/usd/rec_01.txt", "a");
+            std::cout << encode();
+            bool status = fputs(this->encode().c_str(), usd_file);
+            if (status) {
+                // Good status
+            } else {
+                // Bad status
+            }
+
+            fclose(usd_file);
+        } 
     }
 
     void read_from_file() {
