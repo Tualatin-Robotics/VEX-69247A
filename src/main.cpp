@@ -4,28 +4,15 @@
 #include "pros/screen.h"
 
 #include "replay.hpp"
+#include "drivetrain.hpp"
 #include <chrono>
 
 using namespace std::chrono_literals;
 
 typedef long int ull;
 
-const float MOVE_TO_VOLT = 12000 / 128;
-
 // MOTOR DEFINITIONS
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
-
-pros::Motor left_front(LEFT_FRONT_MOTOR);
-pros::Motor left_back(LEFT_BACK_MOTOR);
-pros::Motor right_front(RIGHT_FRONT_MOTOR, true);
-pros::Motor right_back(RIGHT_BACK_MOTOR, true);
-
-pros::Motor roller(ROLLER_MOTOR);
-
-pros::Motor shooter_r(SHOOTER_R_MOTOR, true);
-pros::Motor shooter_c(SHOOTER_C_MOTOR, true);
-
-pros::Motor succ(SUCC_MOTOR);
 
 bool end_game_availible;
 
@@ -50,12 +37,8 @@ void initialize() {
 }
 
 void autonomous() {
-	left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	init_drivetrain();
 	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
 
 	//varibles for shooter switch
 	bool shooterSwitch;
@@ -71,14 +54,7 @@ void autonomous() {
 		vc.read_from_file();
 
 		auto t1 = clock.now(); // Start record
-		int left_stick = vc.ly;
-		int right_stick = vc.ry;
-
-		// Converted old drive to voltage direct drive
-		left_front.move_voltage(MOVE_TO_VOLT * left_stick);
-		left_back.move_voltage(MOVE_TO_VOLT * left_stick);
-		right_front.move_voltage(MOVE_TO_VOLT * right_stick);
-		right_back.move_voltage(MOVE_TO_VOLT * right_stick);
+		drive_auton(&vc);
 	
 
 		if (vc.r1) {
@@ -145,12 +121,8 @@ void autonomous() {
 
 void opcontrol()
 {
-	left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	init_drivetrain();
 	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
 
 	//varibles for shooter switch
 	bool shooterSwitch;
@@ -163,14 +135,7 @@ void opcontrol()
 
 	while(true) {
 		auto t1 = clock.now(); // Start record
-		int left_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-		int right_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
-
-		// Converted old drive to voltage direct drive
-		left_front.move_voltage(MOVE_TO_VOLT * left_stick);
-		left_back.move_voltage(MOVE_TO_VOLT * left_stick);
-		right_front.move_voltage(MOVE_TO_VOLT * right_stick);
-		right_back.move_voltage(MOVE_TO_VOLT * right_stick);
+		drive_op(&drive_con);
 	
 
 		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
@@ -233,8 +198,8 @@ void opcontrol()
 
 		// Record time for replay adjustment
 		auto t2 = clock.now();
-		double ms_adjust = std::chrono::milliseconds(t2 - t1).count();
-		std::cout << "Op control took " << ms_adjust << " ms" << std::endl;
+		//double ms_adjust = std::chrono::milliseconds(t2 - t1).count();
+		//std::cout << "Op control took " << ms_adjust << " ms" << std::endl;
 
 		pros::delay(20);
 	}	
