@@ -22,7 +22,7 @@ class VirtualController {
     VirtualController(pros::Controller* _cont, bool isReading) {
         cont = _cont;
         if (isReading) {
-            usd_file = fopen("/usd/rec_01.txt", "r");
+            usd_file = fopen("/usd/rec_02.txt", "r");
         } else {
             //usd_file = fopen("/usd/rec_01.txt", "w");
         }
@@ -91,10 +91,10 @@ class VirtualController {
     }
 
     void write_to_file() {
-        std::ifstream file("usd/rec_01.txt");
+        std::ifstream file("/usd/demo.txt");
 
         if(!file) {
-            //std::cout << "No SD card insterted" << std::endl;
+            std::cout << "No SD card insterted" << std::endl;
         } else {
             usd_file = fopen("/usd/rec_01.txt", "a");
             std::cout << encode();
