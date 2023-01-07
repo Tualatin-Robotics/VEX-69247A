@@ -4,14 +4,14 @@
 #include "pros/screen.h"
 
 #include "shooter.hpp"
+#include "roller.hpp"
+#include "succ.hpp"
 
 #include "replay.hpp"
 #include "drivetrain.hpp"
 #include <chrono>
 
 using namespace std::chrono_literals;
-
-typedef long int ull;
 
 // MOTOR DEFINITIONS
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
@@ -48,23 +48,10 @@ void autonomous() {
 		auto t1 = clock.now(); // Start record
 		drive_auton(&vc);
 	
-
-		if (vc.r1) {
-			roller = 75;
-		} else if (vc.r2) {
-			roller = -75;
-		} else {
-			roller = 0;
-		}
+		roller_auton(&vc);
 
 		// SUCC Control
-		if (vc.l1) {
-			succ.move_voltage(12000);
-		} else if (vc.l2) {
-			succ.move_voltage(-12000);
-		} else {
-			succ.move_voltage(0);
-		}
+		succ_auton(&vc);
 
 		shoot_auton(&vc);
 
@@ -94,22 +81,10 @@ void opcontrol()
 		auto t1 = clock.now(); // Start record
 		drive_op(&drive_con);
 	
-		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-			roller = 75;
-		} else if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-			roller = -75;
-		} else {
-			roller = 0;
-		}
+		roller_op(&drive_con);
 
 		// SUCC Control
-		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-			succ.move_voltage(12000);
-		} else if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-			succ.move_voltage(-12000);
-		} else {
-			succ.move_voltage(0);
-		}
+		succ_op(&drive_con);
 
 		shoot_op(&drive_con);
 
