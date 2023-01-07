@@ -4,17 +4,27 @@
 #include "main.h"
 #include <sstream>
 #include <string>
+#include <stdio.h>
+
+const int file_size = 40 * 1024;
 
 class VirtualController {
     public:
     int lx, ly, rx, ry;
     bool l1, l2, r1, r2;
     bool a, b, x, y;
+    FILE* usd_file;
 
     pros::Controller* cont;
 
-    VirtualController(pros::Controller* _cont) {
+    VirtualController(pros::Controller* _cont, bool isReading) {
         cont = _cont;
+        if (isReading) {
+            usd_file = fopen("/usd/rec_01.txt", "r");
+        } else {
+            //usd_file = fopen("/usd/rec_01.txt", "w");
+        }
+        
     }
 
     void record_frame() {
@@ -79,7 +89,32 @@ class VirtualController {
     }
 
     void write_to_file() {
-        // TODO
+        usd_file = fopen("/usd/rec_01.txt", "a");
+        std::cout << encode();
+        bool status = fputs(this->encode().c_str(), usd_file);
+        if (status) {
+            // Good status
+        } else {
+            // Bad status
+        }
+        fclose(usd_file);
+    }
+
+    void read_from_file() {
+        char buf[1024]; // This just needs to be larger than the contents of the file
+        bool status = fgets(buf, sizeof(buf), usd_file);
+        if(status) {
+            std::string s(buf);
+            std::cout << s;
+            decode(s);
+        } else {
+            std::cout << "File read error or EOF" << std::endl;
+        }
+        
+    }
+
+    ~VirtualController() {
+        fclose(usd_file);
     }
 };
 

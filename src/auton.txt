@@ -1,0 +1,17 @@
+roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+left_back = 30;
+right_back = 30;
+left_front = 30;
+right_front = 30;
+
+pros::delay(500);
+
+left_back = 0;
+right_back = 0;
+left_front = 0;
+right_front = 0;
+
+roller = 55;
+pros::delay(225);
+roller = 0;

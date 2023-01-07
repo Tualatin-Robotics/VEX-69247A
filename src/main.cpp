@@ -4,6 +4,9 @@
 #include "pros/screen.h"
 
 #include "replay.hpp"
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 typedef long int ull;
 
@@ -12,10 +15,10 @@ const float MOVE_TO_VOLT = 12000 / 128;
 // MOTOR DEFINITIONS
 pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
-pros::Motor left_front(LEFT_FRONT_MOTOR, true);
-pros::Motor left_back(LEFT_BACK_MOTOR, true);
-pros::Motor right_front(RIGHT_FRONT_MOTOR);
-pros::Motor right_back(RIGHT_BACK_MOTOR);
+pros::Motor left_front(LEFT_FRONT_MOTOR);
+pros::Motor left_back(LEFT_BACK_MOTOR);
+pros::Motor right_front(RIGHT_FRONT_MOTOR, true);
+pros::Motor right_back(RIGHT_BACK_MOTOR, true);
 
 pros::Motor roller(ROLLER_MOTOR);
 
@@ -47,28 +50,6 @@ void initialize() {
 }
 
 void autonomous() {
-	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
-	left_back = 30;
-	right_back = 30;
-	left_front = 30;
-	right_front = 30;
-
-	pros::delay(500);
-
-	left_back = 0;
-	right_back = 0;
-	left_front = 0;
-	right_front = 0;
-
-	roller = 55;
-	pros::delay(225);
-	roller = 0;
-}
-
-void opcontrol()
-{
-
 	left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -81,10 +62,107 @@ void opcontrol()
 	bool aPrevious;
 	bool aCurrent;
 
-	VirtualController vc(&drive_con);
-
+	// Replay
+	VirtualController vc(&drive_con, true);
+	std::chrono::high_resolution_clock clock;
 
 	while(true) {
+		// Get recorded frame
+		vc.read_from_file();
+
+		auto t1 = clock.now(); // Start record
+		int left_stick = vc.ly;
+		int right_stick = vc.ry;
+
+		// Converted old drive to voltage direct drive
+		left_front.move_voltage(MOVE_TO_VOLT * left_stick);
+		left_back.move_voltage(MOVE_TO_VOLT * left_stick);
+		right_front.move_voltage(MOVE_TO_VOLT * right_stick);
+		right_back.move_voltage(MOVE_TO_VOLT * right_stick);
+	
+
+		if (vc.r1) {
+			roller = 75;
+		} else if (vc.r2) {
+			roller = -75;
+		} else {
+			roller = 0;
+		}
+
+		// SUCC Control
+		if (vc.l1) {
+			succ.move_voltage(12000);
+		} else if (vc.l2) {
+			succ.move_voltage(-12000);
+		} else {
+			succ.move_voltage(0);
+		}
+
+		if (vc.b && shoot_count == 0) {
+			shooter.set_value(true);
+			pros::delay(70);
+			shooter.set_value(false);
+			shoot_count = 1;
+		}
+
+		if (shoot_count > 0) {
+			shoot_count++;
+			std::cout << shoot_count << std::endl;
+		} 
+		if (shoot_count > shoot_count_limit) {
+			shoot_count = 0;
+			std::cout << "RESET" << std::endl;
+		}
+		
+		aCurrent = vc.a;
+		//shooter toggle
+		if (aCurrent && aCurrent != aPrevious) {
+			shooterSwitch = !shooterSwitch;
+		}
+
+		aPrevious = aCurrent;
+
+		if (shooterSwitch) {
+			shooter_c = 255;
+			shooter_r = 255;
+		} else {
+			shooter_c = 0;
+			shooter_r = 0;
+		}
+
+		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && end_game_availible) {
+			std::cout << "End game used" << std::endl;
+			end_game_availible = false;
+		}
+
+		// Record time for replay adjustment
+		//auto t2 = clock.now();
+		//std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+
+		pros::delay(20);
+	}	
+}
+
+void opcontrol()
+{
+	left_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+
+	//varibles for shooter switch
+	bool shooterSwitch;
+	bool aPrevious;
+	bool aCurrent;
+
+	// Replay
+	VirtualController vc(&drive_con, false);
+	std::chrono::high_resolution_clock clock;
+
+	while(true) {
+		auto t1 = clock.now(); // Start record
 		int left_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
 		int right_stick = drive_con.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
@@ -115,6 +193,7 @@ void opcontrol()
 		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_B) && shoot_count == 0) {
 			shooter.set_value(true);
 			pros::delay(70);
+			shooter.set_value(false);
 			shoot_count = 1;
 		}
 
@@ -133,7 +212,6 @@ void opcontrol()
 			shooterSwitch = !shooterSwitch;
 		}
 
-
 		aPrevious = aCurrent;
 
 		if (shooterSwitch) {
@@ -149,18 +227,14 @@ void opcontrol()
 			end_game_availible = false;
 		}
 
-
-
 		// Replay code
 		vc.record_frame();
-		std::string encoded_str = vc.encode();
-		std::cout << encoded_str;
+		vc.write_to_file();
 
-		vc.a = 0;
-
-		vc.decode(encoded_str);
-		std::cout << vc.a << std::endl;
-		
+		// Record time for replay adjustment
+		auto t2 = clock.now();
+		double ms_adjust = std::chrono::milliseconds(t2 - t1).count();
+		std::cout << "Op control took " << ms_adjust << " ms" << std::endl;
 
 		pros::delay(20);
 	}	
