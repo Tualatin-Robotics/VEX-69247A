@@ -42,9 +42,11 @@ void autonomous() {
 
 	// Replay
 	VirtualController vc(&drive_con, true);
-	
+	std::chrono::high_resolution_clock clock;
 
 	while(true) {
+		auto t1 = clock.now();
+
 		// Get recorded frame
 		vc.read_from_file();
 
@@ -65,7 +67,7 @@ void autonomous() {
 		// Record time for replay adjustment
 		auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-		//auton_adjust = ms_adjust;
+		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
 		pros::delay(20 + (op_adjust - ms_adjust).count());
 	}
 }
@@ -80,7 +82,8 @@ void opcontrol()
 	std::chrono::high_resolution_clock clock;
 
 	while(true) {
-		auto start_time = std::chrono::high_resolution_clock::now(); // Start recording timer
+		auto t1 = clock.now();
+
 		drive_op(&drive_con);
 	
 		roller_op(&drive_con);
