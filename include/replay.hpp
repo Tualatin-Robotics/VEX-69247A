@@ -22,7 +22,7 @@ class VirtualController {
     VirtualController(pros::Controller* _cont, bool isReading) {
         cont = _cont;
         if (isReading) {
-            usd_file = fopen("/usd/rec_02.txt", "r");
+            usd_file = fopen("/usd/rec_01.txt", "r");
         } else {
             //usd_file = fopen("/usd/rec_01.txt", "w");
         }
@@ -109,6 +109,7 @@ class VirtualController {
         } 
     }
 
+    // Probably broken (look at this for fix)
     void read_from_file() {
         char buf[1024]; // This just needs to be larger than the contents of the file
         bool status = fgets(buf, sizeof(buf), usd_file);
