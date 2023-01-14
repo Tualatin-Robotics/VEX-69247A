@@ -112,12 +112,12 @@ class VirtualController {
     // Probably broken (look at this for fix)
     void read_from_file() {
         char buf[1024]; // This just needs to be larger than the contents of the file
-        bool status = fgets(buf, sizeof(buf), usd_file);
-        if(status) {
+        if (fgets(buf, sizeof(buf), usd_file) != NULL) {
             std::string s(buf);
             std::cout << s;
             decode(s);
-        } else {
+        }
+        else {
             std::cout << "File read error or EOF" << std::endl;
         }
         
