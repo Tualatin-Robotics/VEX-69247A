@@ -38,6 +38,7 @@ void shoot_op(pros::Controller* drive_con) {
 
     aPrevious = aCurrent;
 
+
     if (shooterSwitch) {
         shooter_c = 255;
         shooter_r = 255;
@@ -76,7 +77,7 @@ void shoot_auton(VirtualController* vc) {
 	}
 
 	aPrevious = aCurrent;
-
+/*
 	if (shooterSwitch) {
         shooter_c = 255;
         shooter_r = 255;
@@ -84,6 +85,10 @@ void shoot_auton(VirtualController* vc) {
         shooter_c = 0;
         shooter_r = 0;
     }
+    */
+
+    shooter_c = 255;
+        shooter_r = 255;
 }
 
 

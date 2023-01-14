@@ -8,8 +8,12 @@
 #include <fstream>
 #include <cstdlib>
 
+//23
+
 const int file_size = 40 * 1024;
-#define read_file_name "/usd/rec_06.vrx"
+#define read_file_name "/usd/rec_027.vrx"
+
+// GOOD: "/usd/rec_027.vrx" 12 PT  (10 and 14 ms)
 
 class VirtualController {
     public:
@@ -50,6 +54,7 @@ class VirtualController {
         }
         
         this->file_write_name = find_next_file();
+        std::cout << "Writing file to: " << this->file_write_name << std::endl;
     }
 
     void record_frame() {
