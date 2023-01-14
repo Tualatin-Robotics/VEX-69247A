@@ -29,7 +29,7 @@ void set_tank(int l, int r) {
 }
 
 void initialize() {
-	pros::Task task{[=] {
+	pros::Task end_game_task{[=] {
 		pros::delay(100*1000);
 		end_game_availible = true;
 		std::cout << "End Game avalible" << std::endl;

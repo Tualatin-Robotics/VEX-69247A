@@ -9,6 +9,7 @@
 #include <cstdlib>
 
 const int file_size = 40 * 1024;
+#define read_file_name "/usd/rec_12.vrx"
 
 class VirtualController {
     public:
@@ -16,19 +17,39 @@ class VirtualController {
     bool l1, l2, r1, r2;
     bool a, b, x, y;
     FILE* usd_file;
-
-    #define file_name "/usd/rec_11.txt"
+    std::string file_write_name;
 
     pros::Controller* cont;
+    std::string find_next_file() {
+        int i = 0;
+        
+        while (true) {
+            std::string temp("/usd/rec_0");
+            std::string file_extent(".vrx");
+            std::string index = std::to_string(i);
+            temp += index;
+            temp += file_extent;
+            
+            std::ifstream temp_file(temp);
+
+            if (!temp_file) {
+                return temp;
+            } else {
+                i++;
+            }
+        }
+    }
+        
 
     VirtualController(pros::Controller* _cont, bool isReading) {
         cont = _cont;
         if (isReading) {
-            usd_file = fopen(file_name, "r");
+            usd_file = fopen(read_file_name, "r");
         } else {
             //usd_file = fopen("/usd/rec_01.txt", "w");
         }
         
+        this->file_write_name = find_next_file();
     }
 
     void record_frame() {
@@ -98,7 +119,8 @@ class VirtualController {
         if(!file) {
             std::cout << "No SD card insterted" << std::endl;
         } else {
-            usd_file = fopen(file_name, "a");
+            
+            usd_file = fopen(this->file_write_name.c_str(), "a");
             std::cout << encode();
             bool status = fputs(this->encode().c_str(), usd_file);
             if (status) {
