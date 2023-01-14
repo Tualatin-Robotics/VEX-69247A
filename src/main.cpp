@@ -27,11 +27,7 @@ void set_tank(int l, int r) {
 
 // End game functions
 void initialize() {
-<<<<<<< Updated upstream
-	pros::Task end_game_task{[=] {
-=======
 	pros::Task task{[=] { 
->>>>>>> Stashed changes
 		pros::delay(100*1000);
 		end_game_availible = true;
 		std::cout << "End Game avalible" << std::endl;

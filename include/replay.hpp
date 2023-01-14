@@ -9,7 +9,7 @@
 #include <cstdlib>
 
 const int file_size = 40 * 1024;
-#define read_file_name "/usd/rec_12.vrx"
+#define read_file_name "/usd/rec_06.vrx"
 
 class VirtualController {
     public:
