@@ -14,9 +14,9 @@ void succ_op(pros::Controller* drive_con) {
 }
 
 void succ_auton(VirtualController* vc) {
-    if (vc -> l1) {
+    if (vc->l1 == true) {
         succ.move_voltage(12000);
-    } else if (vc -> l2) {
+    } else if (vc->l2 == true) {
         succ.move_voltage(-12000);
     } else {
         succ.move_voltage(0);

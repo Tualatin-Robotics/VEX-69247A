@@ -77,8 +77,13 @@ void shoot_auton(VirtualController* vc) {
 
 	aPrevious = aCurrent;
 
-	shooter_c = 255;
-    shooter_r = 255;
+	if (shooterSwitch) {
+        shooter_c = 255;
+        shooter_r = 255;
+    } else {
+        shooter_c = 0;
+        shooter_r = 0;
+    }
 }
 
 

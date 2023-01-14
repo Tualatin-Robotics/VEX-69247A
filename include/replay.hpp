@@ -128,7 +128,7 @@ class VirtualController {
             } else {
                 // Bad status
             }
-
+    
             fclose(usd_file);
         } 
     }
