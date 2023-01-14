@@ -17,12 +17,14 @@ class VirtualController {
     bool a, b, x, y;
     FILE* usd_file;
 
+    #define file_name "/usd/rec_11.txt"
+
     pros::Controller* cont;
 
     VirtualController(pros::Controller* _cont, bool isReading) {
         cont = _cont;
         if (isReading) {
-            usd_file = fopen("/usd/rec_01.txt", "r");
+            usd_file = fopen(file_name, "r");
         } else {
             //usd_file = fopen("/usd/rec_01.txt", "w");
         }
@@ -37,10 +39,10 @@ class VirtualController {
         ry = cont->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
         // Digital records
-        l1 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_R1);
-        l2 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_R2);
-        r1 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_L1);
-        r2 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+        l1 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_L1);
+        l2 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+        r1 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_R1);
+        r2 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_R2);
         a = cont->get_digital(pros::E_CONTROLLER_DIGITAL_A);
         b = cont->get_digital(pros::E_CONTROLLER_DIGITAL_B);
         x = cont->get_digital(pros::E_CONTROLLER_DIGITAL_X);
@@ -96,7 +98,7 @@ class VirtualController {
         if(!file) {
             std::cout << "No SD card insterted" << std::endl;
         } else {
-            usd_file = fopen("/usd/rec_01.txt", "a");
+            usd_file = fopen(file_name, "a");
             std::cout << encode();
             bool status = fputs(this->encode().c_str(), usd_file);
             if (status) {
@@ -112,14 +114,20 @@ class VirtualController {
     // Probably broken (look at this for fix)
     void read_from_file() {
         char buf[1024]; // This just needs to be larger than the contents of the file
-        if (fgets(buf, sizeof(buf), usd_file) != NULL) {
-            std::string s(buf);
-            std::cout << s;
-            decode(s);
-        }
-        else {
-            std::cout << "File read error or EOF" << std::endl;
-        }
+        std::ifstream file("/usd/demo.txt");
+
+        if(!file) {
+            std::cout << "No SD card insterted" << std::endl;
+        } else {
+            if (fgets(buf, sizeof(buf), usd_file) != NULL) {
+                std::string s(buf);
+                std::cout << s;
+                decode(s);
+            }
+            else {
+                std::cout << "File read error or EOF" << std::endl;
+            }
+        } 
         
     }
 

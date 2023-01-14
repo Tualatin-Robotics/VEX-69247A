@@ -68,7 +68,7 @@ void autonomous() {
 		auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
-		pros::delay(20);
+		pros::delay(23);
 	}
 }
 
