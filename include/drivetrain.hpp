@@ -9,6 +9,8 @@ void init_drivetrain() {
 	left_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_front.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	right_back.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+    roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 void drive_auton(VirtualController* vc) {

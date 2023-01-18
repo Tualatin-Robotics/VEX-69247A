@@ -38,6 +38,7 @@ void shoot_op(pros::Controller* drive_con) {
 
     aPrevious = aCurrent;
 
+
     if (shooterSwitch) {
         shooter_c = 255;
         shooter_r = 255;

@@ -8,7 +8,12 @@
 #include <fstream>
 #include <cstdlib>
 
+//23
+
 const int file_size = 40 * 1024;
+#define read_file_name "/usd/rec_027.vrx"
+
+// GOOD: "/usd/rec_027.vrx" 12 PT  (10 and 14 ms)
 
 class VirtualController {
     public:
@@ -16,17 +21,40 @@ class VirtualController {
     bool l1, l2, r1, r2;
     bool a, b, x, y;
     FILE* usd_file;
+    std::string file_write_name;
 
     pros::Controller* cont;
+    std::string find_next_file() {
+        int i = 0;
+        
+        while (true) {
+            std::string temp("/usd/rec_0");
+            std::string file_extent(".vrx");
+            std::string index = std::to_string(i);
+            temp += index;
+            temp += file_extent;
+            
+            std::ifstream temp_file(temp);
+
+            if (!temp_file) {
+                return temp;
+            } else {
+                i++;
+            }
+        }
+    }
+        
 
     VirtualController(pros::Controller* _cont, bool isReading) {
         cont = _cont;
         if (isReading) {
-            usd_file = fopen("/usd/rec_01.txt", "r");
+            usd_file = fopen(read_file_name, "r");
         } else {
             //usd_file = fopen("/usd/rec_01.txt", "w");
         }
         
+        this->file_write_name = find_next_file();
+        std::cout << "Writing file to: " << this->file_write_name << std::endl;
     }
 
     void record_frame() {
@@ -37,10 +65,10 @@ class VirtualController {
         ry = cont->get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
         // Digital records
-        l1 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_R1);
-        l2 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_R2);
-        r1 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_L1);
-        r2 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+        l1 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_L1);
+        l2 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_L2);
+        r1 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_R1);
+        r2 = cont->get_digital(pros::E_CONTROLLER_DIGITAL_R2);
         a = cont->get_digital(pros::E_CONTROLLER_DIGITAL_A);
         b = cont->get_digital(pros::E_CONTROLLER_DIGITAL_B);
         x = cont->get_digital(pros::E_CONTROLLER_DIGITAL_X);
@@ -91,12 +119,13 @@ class VirtualController {
     }
 
     void write_to_file() {
-        std::ifstream file("usd/rec_01.txt");
+        std::ifstream file("/usd/demo.txt");
 
         if(!file) {
-            //std::cout << "No SD card insterted" << std::endl;
+            std::cout << "No SD card insterted" << std::endl;
         } else {
-            usd_file = fopen("/usd/rec_01.txt", "a");
+            
+            usd_file = fopen(this->file_write_name.c_str(), "a");
             std::cout << encode();
             bool status = fputs(this->encode().c_str(), usd_file);
             if (status) {
@@ -104,21 +133,28 @@ class VirtualController {
             } else {
                 // Bad status
             }
-
+    
             fclose(usd_file);
         } 
     }
 
+    // Probably broken (look at this for fix)
     void read_from_file() {
         char buf[1024]; // This just needs to be larger than the contents of the file
-        bool status = fgets(buf, sizeof(buf), usd_file);
-        if(status) {
-            std::string s(buf);
-            std::cout << s;
-            decode(s);
+        std::ifstream file("/usd/demo.txt");
+
+        if(!file) {
+            std::cout << "No SD card insterted" << std::endl;
         } else {
-            std::cout << "File read error or EOF" << std::endl;
-        }
+            if (fgets(buf, sizeof(buf), usd_file) != NULL) {
+                std::string s(buf);
+                std::cout << s;
+                decode(s);
+            }
+            else {
+                std::cout << "File read error or EOF" << std::endl;
+            }
+        } 
         
     }
 

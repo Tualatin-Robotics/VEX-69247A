@@ -14,9 +14,9 @@ void roller_op(pros::Controller* drive_con) {
 }
 
 void roller_auton(VirtualController* vc) {
-    if (vc -> r1) {
+    if (vc->r1 == true) {
 		roller = 75;
-	} else if (vc -> r2) {
+	} else if (vc->r2 == true) {
 		roller = -75;
 	} else {
 		roller = 0;
