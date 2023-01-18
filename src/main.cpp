@@ -84,13 +84,13 @@ void opcontrol()
 	while(true) {
 		auto t1 = clock.now();
 
+		//Drivetrain Control
 		drive_op(&drive_con);
-	
+		//Roller Control
 		roller_op(&drive_con);
-
 		// SUCC Control
 		succ_op(&drive_con);
-
+		//Shoot Controll
 		shoot_op(&drive_con);
 
 
