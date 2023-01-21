@@ -6,6 +6,7 @@
 #include "shooter.hpp"
 #include "roller.hpp"
 #include "succ.hpp"
+#include "end_game.hpp"
 
 #include "replay.hpp"
 #include "drivetrain.hpp"
@@ -28,7 +29,7 @@ void set_tank(int l, int r) {
 // End game functions
 void initialize() {
 	pros::Task end_game_task{[=] { 
-		pros::delay(100*1000);
+		pros::delay(90*1000);
 		end_game_availible = true;
 		std::cout << "End Game avalible" << std::endl;
 	}};
@@ -93,9 +94,8 @@ void opcontrol()
 		//Shoot Controll
 		shoot_op(&drive_con);
 
-
-		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && end_game_availible) {
-			std::cout << "End game used" << std::endl;
+		if (end_game_availible) {
+			end_game(&drive_con);
 			end_game_availible = false;
 		}
 

@@ -16,6 +16,8 @@ const float MOVE_TO_VOLT = 12000 / 128;
 #define SHOOTER_R_MOTOR 15
 #define SHOOTER_C_MOTOR 14
 
+#define ENDGAME_PORT 'B'
+
 #define SHOOT_PORT 'A'
 #define ODOMETRY_PORT_0 'C'
 #define ODOMETRY_PORT_1 'D'
