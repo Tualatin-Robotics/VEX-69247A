@@ -8,12 +8,12 @@
             "-fno-ms-extensions",
             "-fno-ms-compatibility",
             "-fno-delayed-template-parsing",
-            "-isystemc:\\users\\halse\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include/c++/10.2.1",
-            "-isystemc:\\users\\halse\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include/c++/10.2.1/arm-none-eabi/thumb/v7-a+simd/softfp",
-            "-isystemc:\\users\\halse\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include/c++/10.2.1/backward",
-            "-isystemc:\\users\\halse\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/include",
-            "-isystemc:\\users\\halse\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/include-fixed",
-            "-isystemc:\\users\\halse\\appdata\\local\\programs\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include/c++/10.2.1",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include/c++/10.2.1/arm-none-eabi/thumb/v7-a+simd/softfp",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include/c++/10.2.1/backward",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/include",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/include-fixed",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/include",
             "-iquote./include",
             "-iquote./include/okapi/squiggles",
             "-iquote./include/./",
@@ -34,7 +34,7 @@
             "bin/main.cpp.o",
             "src\\main.cpp"
         ],
-        "directory": "C:\\Users\\halse\\Documents\\Github\\VEX-69247A",
+        "directory": "C:\\Users\\tuhsrobotics\\Documents\\GitHub\\VEX-69247A",
         "file": "src\\main.cpp"
     }
 ]
