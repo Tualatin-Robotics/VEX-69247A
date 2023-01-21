@@ -2,6 +2,7 @@
 #define _SHOOTER_
 
 #include "replay.hpp"
+#include "main.h"
 
 // Pneumatics Setup
 int shoot_count = 0;
