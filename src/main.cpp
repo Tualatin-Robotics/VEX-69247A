@@ -29,7 +29,7 @@ void set_tank(int l, int r) {
 // End game functions
 void initialize() {
 	pros::Task end_game_task{[=] { 
-		pros::delay(90*1000);
+		pros::delay(1*1000);
 		end_game_availible = true;
 		std::cout << "End Game avalible" << std::endl;
 	}};
@@ -94,7 +94,7 @@ void opcontrol()
 		//Shoot Controll
 		shoot_op(&drive_con);
 
-		if (end_game_availible) {
+		if (end_game_availible && drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
 			end_game(&drive_con);
 			end_game_availible = false;
 		}
