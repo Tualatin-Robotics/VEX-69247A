@@ -42,7 +42,7 @@ void shoot_op(pros::Controller* drive_con) {
 
 
     if (shooterSwitch) {
-        shooter_c = 255-100;
+        shooter_c = 255-125;
         shooter_r = 255;
     } else {
         shooter_c = 0;
