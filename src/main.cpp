@@ -106,11 +106,11 @@ void opcontrol()
 	init_drivetrain();
 
 	// Replay
-	VirtualController vc(&drive_con, false);
-	std::chrono::high_resolution_clock clock;
+	//VirtualController vc(&drive_con, false);
+	//std::chrono::high_resolution_clock clock;
 
 	while(true) {
-		auto t1 = clock.now();
+		//auto t1 = clock.now();
 
 		//Drivetrain Control
 		drive_op(&drive_con);
@@ -128,13 +128,15 @@ void opcontrol()
 		}
 		*/
 		// Replay code
-		vc.record_frame();
-		vc.write_to_file();
+		//vc.record_frame();
+		//vc.write_to_file();
 
 		// Record time for replay adjustment
+		/*
 		auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Op control took " << ms_adjust.count() << " ms" << std::endl;
 		pros::delay(10);
+		*/
 	}	
 }
