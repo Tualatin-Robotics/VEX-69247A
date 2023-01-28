@@ -10,7 +10,8 @@ const float MOVE_TO_VOLT = 12000 / 128;
 #define RIGHT_FRONT_MOTOR 16
 #define RIGHT_BACK_MOTOR 17
 
-#define ROLLER_MOTOR 10
+//B Team Roller 11 A Team 10
+#define ROLLER_MOTOR 11
 #define SUCC_MOTOR 9
 
 #define SHOOTER_R_MOTOR 15

@@ -1,6 +1,7 @@
 #ifndef _SHOOTER_
 #define _SHOOTER_
 
+#include "pros/rtos.h"
 #include "replay.hpp"
 #include "main.h"
 
@@ -41,7 +42,7 @@ void shoot_op(pros::Controller* drive_con) {
 
 
     if (shooterSwitch) {
-        shooter_c = 255;
+        shooter_c = 255-100;
         shooter_r = 255;
     } else {
         shooter_c = 0;
@@ -49,11 +50,23 @@ void shoot_op(pros::Controller* drive_con) {
     }
 }
 
-void shoot_auton(VirtualController* vc) {
+void shoot_auton() {
     bool shooterSwitch;
 	bool aPrevious;
 	bool aCurrent;
 
+    shooter_c = 255-100;
+    pros::delay(200);
+    shooter.set_value(true);
+    pros::delay(70);
+    shooter.set_value(false);
+    pros::delay(30);
+    shooter.set_value(true);
+    pros::delay(70);
+    shooter.set_value(false);
+    shooter_c = 0;
+
+    /*
     if (vc->b && shoot_count == 0) {
 			shooter.set_value(true);
 			pros::delay(70);
@@ -78,6 +91,7 @@ void shoot_auton(VirtualController* vc) {
 	}
 
 	aPrevious = aCurrent;
+    */
 /*
 	if (shooterSwitch) {
         shooter_c = 255;
@@ -88,8 +102,8 @@ void shoot_auton(VirtualController* vc) {
     }
     */
 
-    shooter_c = 255;
-        shooter_r = 255;
+    //shooter_c = 255;
+      //  shooter_r = 255;
 }
 
 

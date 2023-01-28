@@ -19,13 +19,6 @@ pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
 bool end_game_availible;
 
-void set_tank(int l, int r) {
-	left_back = l;
-	right_back = r;
-	left_front = l;
-	right_front = r;
-}
-
 // End game functions
 void initialize() {
 	pros::Task end_game_task{[=] { 
@@ -36,6 +29,39 @@ void initialize() {
 }
 
 void autonomous() {
+	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+	left_back = 30;
+	right_back = 30;
+	left_front = 30;
+	right_front = 30;
+
+	pros::delay(500);
+
+	left_back = 0;
+	right_back = 0;
+	left_front = 0;
+	right_front = 0;
+
+	roller = 70;
+	pros::delay(225);
+	roller = 0;
+
+	left_back = 50;
+	right_back = 50;
+	left_front = 50;
+	right_front = 50;
+
+	pros::delay(500);
+
+	right_back = 0;
+	right_front = 0;
+
+	pros::delay(400);
+
+	shoot_auton();
+
+	/*
 	// Drive train
 	init_drivetrain();
 
@@ -64,13 +90,14 @@ void autonomous() {
 			std::cout << "End game used" << std::endl;
 			end_game_availible = false;
 		}
-
 		// Record time for replay adjustment
 		auto t2 = clock.now();
 		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
 		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
 		pros::delay(14);
 	}
+	*/
+	
 }
 
 void opcontrol()
@@ -94,11 +121,12 @@ void opcontrol()
 		//Shoot Controll
 		shoot_op(&drive_con);
 
+		/*
 		if (end_game_availible && drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
 			end_game(&drive_con);
 			end_game_availible = false;
 		}
-
+		*/
 		// Replay code
 		vc.record_frame();
 		vc.write_to_file();
