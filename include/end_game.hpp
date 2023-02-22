@@ -5,7 +5,7 @@
 #include "main.h"
 
 pros::ADIDigitalOut end_game_shooter(ENDGAME_PORT);
-pros::Motor end_game_motor(13);
+pros::Motor end_game_motor(ENDGAME_MOTOR_PORT);
 
 void end_game(pros::Controller* drive_con) {
     /*
@@ -14,9 +14,7 @@ void end_game(pros::Controller* drive_con) {
     end_game_shooter.set_value(false);
     */
 
-    end_game_motor = -100;
-    pros::delay(40);
-    end_game_motor = 0;
+    end_game_motor.move_voltage(-12000);
 
     std::cout << "Fire End Game" << std::endl;
 }

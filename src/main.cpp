@@ -19,13 +19,6 @@ pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
 bool end_game_availible;
 
-void set_tank(int l, int r) {
-	left_back = l;
-	right_back = r;
-	left_front = l;
-	right_front = r;
-}
-
 // End game functions
 void initialize() {
 	pros::Task end_game_task{[=] { 
