@@ -19,6 +19,13 @@ pros::Controller drive_con(pros::E_CONTROLLER_MASTER);
 
 bool end_game_availible;
 
+enum team_enum {
+	A_Team,
+	B_Team
+};
+
+team_enum team;
+
 // End game functions
 void initialize() {
 	pros::Task end_game_task{[=] { 
@@ -26,6 +33,19 @@ void initialize() {
 		end_game_availible = true;
 		std::cout << "End Game avalible" << std::endl;
 	}};
+	
+	std::ifstream A_Team_File("/usd/A_Team.txt");
+	std::ifstream B_Team_File("usd/B_Team.txt");
+
+	if (A_Team_File) {
+		team = A_Team;
+		std::cout << "A Team inserted" << std::endl;
+	}
+	else if (B_Team_File) {
+		team = B_Team;
+		std::cout << "B Team inserted" << std::endl;
+	}
+
 }
 
 void autonomous() {
