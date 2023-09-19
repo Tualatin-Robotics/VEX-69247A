@@ -8,6 +8,8 @@
 #include "succ.hpp"
 #include "end_game.hpp"
 
+#include "flip.hpp"
+
 #include "replay.hpp"
 #include "drivetrain.hpp"
 #include <chrono>
@@ -87,8 +89,15 @@ void opcontrol()
 		//Shoot Controll
 		shoot_op(&drive_con);
 
+<<<<<<< Updated upstream
 		if (end_game_availible && drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
 			end_game(&drive_con);
+=======
+		flip(&drive_con);
+
+		if (drive_con.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && end_game_availible) {
+			std::cout << "End game used" << std::endl;
+>>>>>>> Stashed changes
 			end_game_availible = false;
 		}
 
