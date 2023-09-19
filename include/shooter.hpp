@@ -8,9 +8,9 @@ int timer = 0;
 int shoot_time_max = 20;
 pros::ADIDigitalOut shooter(SHOOT_PORT);
 
-bool shooterSwitch;
-bool aPrevious;
-bool aCurrent;
+bool shooterSwitch = false;
+bool aPrevious = false;
+bool aCurrent = false;
 
 void shoot_op(pros::Controller* drive_con) {
     //Timer determines when you can shoot. When the timer is 0, you can shoot
@@ -49,10 +49,6 @@ void shoot_op(pros::Controller* drive_con) {
 }
 
 void shoot_auton(VirtualController* vc) {
-    bool shooterSwitch;
-	bool aPrevious;
-	bool aCurrent;
-
     //The timer stuff is explain in op above
     if (vc->b && timer <= 0) {
 		shooter.set_value(true);
