@@ -16,12 +16,8 @@ const float MOVE_TO_VOLT = 12000 / 128;
 #define SHOOTER_R_MOTOR 15
 #define SHOOTER_C_MOTOR 14
 
-<<<<<<< Updated upstream
 #define ENDGAME_PORT 'B'
 #define ENDGAME_MOTOR_PORT 13
-=======
-#define FLIPPY_MOTOR 11
->>>>>>> Stashed changes
 
 #define SHOOT_PORT 'A'
 #define ODOMETRY_PORT_0 'C'
@@ -39,7 +35,5 @@ pros::Motor shooter_r(SHOOTER_R_MOTOR, true);
 pros::Motor shooter_c(SHOOTER_C_MOTOR, true);
 
 pros::Motor succ(SUCC_MOTOR);
-
-pros::Motor flippy(FLIPPY_MOTOR);
 
 #endif
