@@ -12,6 +12,8 @@
 #include "drivetrain.hpp"
 #include <chrono>
 
+//#define _SAFE_AUTON_B_
+
 using namespace std::chrono_literals;
 
 // MOTOR DEFINITIONS
@@ -29,16 +31,40 @@ void initialize() {
 }
 
 void autonomous() {
+	#ifdef _SAFE_AUTON_B_
+
+	roller.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+	left_back = 255;
+	right_back = 255;
+	left_front = 255;
+	right_front = 255;
+
+	pros::delay(500);
+
+	left_back = 0;
+	right_back = 0;
+	left_front = 0;
+	right_front = 0;
+
+	roller = 55;
+	succ = -55;
+
+	pros::delay(225);
+
+	roller = 0;
+	succ = 0;
+
+	#else
 	// Drive train
 	init_drivetrain();
 
 	// Replay
 	VirtualController vc(&drive_con, true);
-	std::chrono::high_resolution_clock clock;
 
 	// Main loop
 	while(true) {
-		auto t1 = clock.now();
+		double old_time = pros::micros();
 
 		// Get recorded frame
 		vc.read_from_file();
@@ -59,11 +85,13 @@ void autonomous() {
 		}
 
 		// Record time for replay adjustment
-		auto t2 = clock.now();
-		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-		std::cout << "Auton control took " << ms_adjust.count() << " ms" << std::endl;
+		double new_time = pros::micros();
+		std::cout << "Auton control took " << new_time - old_time << " microseconds";
 		pros::delay(14);
+		double new_new_time = pros::micros();
+		std::cout << " Total time: control took " << new_new_time - new_time << " microseconds" << std::endl;
 	}
+	#endif
 }
 
 void opcontrol()
@@ -73,10 +101,9 @@ void opcontrol()
 
 	// Replay
 	VirtualController vc(&drive_con, false);
-	std::chrono::high_resolution_clock clock;
 
 	while(true) {
-		auto t1 = clock.now();
+		double old_time = pros::micros();
 
 		//Drivetrain Control
 		drive_op(&drive_con);
@@ -97,9 +124,10 @@ void opcontrol()
 		vc.write_to_file();
 
 		// Record time for replay adjustment
-		auto t2 = clock.now();
-		std::chrono::milliseconds ms_adjust = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
-		std::cout << "Op control took " << ms_adjust.count() << " ms" << std::endl;
+		double new_time = pros::micros();
+		std::cout << "Auton control took " << new_time - old_time << " microseconds";
 		pros::delay(10);
+		double new_new_time = pros::micros();
+		std::cout << "Total time: control took " << new_new_time - new_time << " microseconds" << std::endl;
 	}	
 }

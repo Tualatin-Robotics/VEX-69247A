@@ -11,9 +11,10 @@
 //23
 
 const int file_size = 40 * 1024;
-#define read_file_name "/usd/rec_027.vrx"
+#define read_file_name "/usd/rec_078.vrx"
 
-// GOOD: "/usd/rec_027.vrx" 12 PT  (10 and 14 ms)
+// GOOD: "/usd/rec_027.vrx" 12 PT  (10 and 14 ms) [A TEAM AUTO]
+// MAYBE: "usd/rec_068.vrx" __ PT (10 and 14 ms) [A TEAM SKILLS AT]
 
 class VirtualController {
     public:

@@ -32,7 +32,7 @@ pros::Motor right_back(RIGHT_BACK_MOTOR, true);
 pros::Motor roller(ROLLER_MOTOR);
 
 pros::Motor shooter_r(SHOOTER_R_MOTOR, true);
-pros::Motor shooter_c(SHOOTER_C_MOTOR, true);
+pros::Motor shooter_c(SHOOTER_C_MOTOR, false);
 
 pros::Motor succ(SUCC_MOTOR);
 
